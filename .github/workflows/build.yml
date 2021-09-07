@@ -1,0 +1,23 @@
+name: Build
+
+on: 
+  workflow_call:
+    inputs:
+      input1:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo Hello, world! Build
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build, Build
+          echo test, and deploy your project. Build
+          echo input is ${{ inputs.input1 }}
