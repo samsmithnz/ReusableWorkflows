@@ -6,12 +6,12 @@ on:
 
 jobs:
   build:
-    uses: customer-success-architects/ReusableWorkflows/.github/workflows/build.yml@v1
+    uses: samsmithnz/ReusableWorkflowsDemo/.github/workflows/build.yml@v1
     with:
       project: "My magic project"
 
   test:
-    uses: customer-success-architects/ReusableWorkflows/.github/workflows/test.yml@v1
+    uses: samsmithnz/ReusableWorkflowsDemo/.github/workflows/test.yml@v1
     with:
       project: "My magic project"
 
@@ -19,7 +19,7 @@ jobs:
     needs: 
     - build
     - test
-    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    uses: samsmithnz/ReusableWorkflowsDemo/.github/workflows/deploy.yml@v1
     with:
       projectPackage: "MyMagicProject.zip"
       environment: dev
@@ -29,7 +29,7 @@ jobs:
   deployToQA:
     needs: 
     - deployToDev
-    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    uses: samsmithnz/ReusableWorkflowsDemo/.github/workflows/deploy.yml@v1
     with:
       projectPackage: "MyMagicProject.zip"
       environment: qa
@@ -39,7 +39,7 @@ jobs:
   deployToProd:
     needs: 
     - deployToQA
-    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    uses: samsmithnz/ReusableWorkflowsDemo/.github/workflows/deploy.yml@v1
     with:
       projectPackage: "MyMagicProject.zip"
       environment: prod
