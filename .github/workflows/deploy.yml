@@ -1,0 +1,28 @@
+name: Deploy
+
+on: 
+  workflow_call:
+    inputs:
+      projectPackage:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      cloud: 
+        required: false
+        type: string
+      scale:
+        required: false
+        type: string
+        default: '1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Deploying project ${{ inputs.projectPackage }} to ${{ inputs.environment }} on ${{ inputs.cloud }} with ${{ inputs.scale }} instances
+  smokeTest:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Verifying project ${{ inputs.projectPackage }} to ${{ inputs.environment }} on ${{ inputs.cloud }} with ${{ inputs.scale }} instances deployed correctly
