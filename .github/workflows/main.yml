@@ -2,16 +2,46 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    uses: customer-success-architects/ReusableWorkflows/.github/workflows/build.yml@v1
+    with:
+      project: "My magic project"
 
-    steps:
-      - uses: samsmithnz/ReusableWorkflows/build.yml@1
-        with:
-          input1: "From main!"
+  test:
+    uses: customer-success-architects/ReusableWorkflows/.github/workflows/test.yml@v1
+    with:
+      project: "My magic project"
+
+  deployToDev:
+    needs: 
+    - build
+    - test
+    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    with:
+      projectPackage: "MyMagicProject.zip"
+      environment: dev
+      scale: '1'
+      cloud: Azure
+      
+  deployToQA:
+    needs: 
+    - deployToDev
+    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    with:
+      projectPackage: "MyMagicProject.zip"
+      environment: qa
+      scale: '2'
+      cloud: Azure
+
+  deployToProd:
+    needs: 
+    - deployToQA
+    uses: customer-success-architects/ReusableWorkflows/.github/workflows/deploy.yml@v1
+    with:
+      projectPackage: "MyMagicProject.zip"
+      environment: prod
+      scale: '5'
+      cloud: Azure
